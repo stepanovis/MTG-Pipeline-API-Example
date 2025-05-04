@@ -1,0 +1,84 @@
+version: 1.0
+biobank: APITEST
+cdm: demo/OMOP:5.4
+participantTable: None
+participantIdField: None
+bridges:
+  -
+    name: cond
+    cdmTable: condition_occurrence
+    isPublished: true
+    structures:
+      -
+        cdmField: condition_occurrence_id
+        join: conditions
+        sql: "$table.encounter"
+        isPublished: true
+        mappingType: plain
+        automationStrategy: convertStringToInt
+      -
+        cdmField: condition_type_concept_id
+        join: conditions
+        sql: "$table.codek"
+        isPublished: true
+        mappingType: conceptId
+        automationStrategy: none
+        suggestionsSettings:
+          vocabularies: [SNOMED, ICD10]
+          domains: [Condition]
+          isStandardConceptOnly: true
+          generators: ["UnisonSearchV1"]
+      -
+        cdmField: condition_concept_id
+        join: conditions
+        sql: "$table.description"
+        isPublished: true
+        mappingType: conceptId
+        automationStrategy: none
+        suggestionsSettings:
+          vocabularies: [ SNOMED, ICD10 ]
+          domains: [ Condition ]
+          isStandardConceptOnly: false
+          generators: ["UnisonSearchV1"]
+  -
+    name: cond2
+    cdmTable: condition_occurrence
+    isPublished: true
+    structures:
+      -
+        cdmField: condition_occurrence_id
+        join: conditions
+        sql: "$table.encounter"
+        isPublished: true
+        mappingType: plain
+        automationStrategy: convertStringToInt
+      -
+        cdmField: condition_type_concept_id
+        join: conditions
+        sql: "$table.code"
+        isPublished: true
+        mappingType: conceptId
+        automationStrategy: convertStringToInt
+        suggestionsSettings:
+          vocabularies: [SNOMED, ICD10]
+          domains: [Condition]
+          isStandardConceptOnly: true
+          generators: ["UnisonSearchV1"]
+      -
+        cdmField: condition_concept_id
+        join: conditions
+        sql: "$table.description"
+        isPublished: true
+        mappingType: conceptId
+        automationStrategy: none
+        suggestionsSettings:
+          vocabularies: [ SNOMED, ICD10 ]
+          domains: [ Condition ]
+          isStandardConceptOnly: false
+          generators: ["UnisonSearchV1"]
+joins:
+  -
+    alias: conditions
+    table1: ''
+    table2: allergies.conditions
+    on: '$table1.id=$table2.patient'
