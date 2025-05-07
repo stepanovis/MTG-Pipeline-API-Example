@@ -1,6 +1,8 @@
 import subprocess
 import json
 
+your_api_key = 'fOUbC7xPgpLeGSQlwwHArJXIht0NEOn2TXldaAT9Exp31SEImKTwGgAHZIDeoalh'
+
 def run_curl(api_key: str):
     cohort_query = """SELECT:
   - c1.name
@@ -55,8 +57,4 @@ https://dev-api.hyperunison.com/api/public/pipeline/workflow/run/10/"""
 
 
 # Пример вызова
-run_curl("FmqTTZ7LqEEcY7OKlnrLbjgzzyk6BeEHzxSZAQJnfnY904pdlBmimcp5PVRM3oW2")
-
-
-public/job/status
-public/runner_message
+run_curl(your_api_key)

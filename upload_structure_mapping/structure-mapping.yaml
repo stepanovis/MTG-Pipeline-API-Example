@@ -1,8 +1,8 @@
 version: 1.0
-biobank: APITEST
+biobank: YAMLEXMPL #https://app.hyperunison.com/converter/biobanks/YAMLEXMPL/1/structure
 cdm: demo/OMOP:5.4
-participantTable: None
-participantIdField: None
+participantTable: allergies.patients
+participantIdField: id
 bridges:
   -
     name: cond
