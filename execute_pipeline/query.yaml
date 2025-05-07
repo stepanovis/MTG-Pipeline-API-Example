@@ -1,0 +1,29 @@
+SELECT:
+  - c1.name
+  - c2.name
+  - gender
+  - race
+  - year_of_birth
+
+FROM: [UKBB1, ATLAS1]
+
+JOIN:
+  - condition_occurrence: c1
+  - drug_exposure: d1_line1
+  - drug_exposure: d1_line2
+  - condition_occurrence: c2
+  - drug_exposure: d2
+
+WHERE:
+  - c1.name IN ["Rheumatoid arthritis, unspecified"]
+  - d1_line1.name IN ["Methotrexate", "Hydroxychloroquine", "Sulfasalazine", "Leflunomide"]
+  - d1_line1.start_date > c1.start_date and c1.end_date + 90 days > d1_line1.end_date
+  - d1_line2.name IN ["Adalimumab", "Etanercept", "Infliximab", "Golimumab"]
+  - d1_line2.start_date > d1_line1.end_date and c1.end_date + 90 days > d1_line2.end_date
+  - c2.name IN ["Cardiovascular disease, unspecified"]
+  - c2.start_date > c1.start_date
+  - d2.name IN ["Statins (HMG-CoA reductase inhibitors)", "BETA BLOCKERS/RELATED"]
+  - d2.start_date > c2.start_date
+  - d2.start_date < c2.end_date + 90 days
+
+LIMIT: 500

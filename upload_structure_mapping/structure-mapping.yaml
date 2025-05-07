@@ -19,7 +19,7 @@ bridges:
       -
         cdmField: condition_type_concept_id
         join: conditions
-        sql: "$table.codek"
+        sql: "$table.code"
         isPublished: true
         mappingType: conceptId
         automationStrategy: none

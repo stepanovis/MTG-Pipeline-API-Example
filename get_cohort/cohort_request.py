@@ -1,26 +1,29 @@
-from hyperunison_public_api import UnisonSDKApi
-from hyperunison_public_api import Configuration
+import requests
 
+# Параметры
 your_api_key = 'fOUbC7xPgpLeGSQlwwHArJXIht0NEOn2TXldaAT9Exp31SEImKTwGgAHZIDeoalh'
+biobank_id = 1  # пример: "ATLAS1"
+url = f"https://api.hyperunison.com/api/public/cohort/biobank/{biobank_id}/execute-query"
 
-query = ('CDM: OMOP:5.4\n')
-query += 'SELECT:\n'
-query += ' - gender\n'
-query += ' - race\n'
-query += ' - year_of_birth\n\n'
-query += 'FROM: [ATLAS1]\n\n'
-query += 'LIMIT: 500\n'
-biobank_id = '1'
+# Чтение YAML-запроса как строки
+with open("query.yaml", "r") as f:
+    yaml_content = f.read()
 
-api = UnisonSDKApi(
-    Configuration(
-        host='https://api.hyperunison.com/',
-    )
-)
-response = api.execute_cohort_request(
-    your_api_key,
-    biobank_id,
-    query
-)
+# Формирование тела запроса
+payload = {
+    "yaml": yaml_content,
+    "skipCache": False  # или True, если нужно игнорировать кэш
+}
 
-print(response)
+headers = {
+    "apiKey": your_api_key,
+    "accept": "application/json",
+    "Content-Type": "application/json"
+}
+
+# Выполнение POST-запроса
+response = requests.post(url, json=payload, headers=headers)
+
+# Печать результата
+print("Status Code:", response.status_code)
+print("Response JSON:", response.json())

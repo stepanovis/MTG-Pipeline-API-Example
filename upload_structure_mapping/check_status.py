@@ -3,7 +3,7 @@ import json
 
 
 # Biobank code
-biobank_code = 'YAMLEXMPL'
+biobank_code = 'YAMLEXMPL' #https://app.hyperunison.com/converter/biobanks/YAMLEXMPL/1/structure
 
 # Your API key
 api_key = 'fOUbC7xPgpLeGSQlwwHArJXIht0NEOn2TXldaAT9Exp31SEImKTwGgAHZIDeoalh'
